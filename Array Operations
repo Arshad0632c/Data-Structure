@@ -1,0 +1,168 @@
+Array Operation:
+
+#include<iostream>
+using namespace std;
+
+void insert_end(int arr[], int &size, int &n);
+void insert_begin(int arr[], int &size, int &n);
+void insert_position(int arr[], int &size, int &n);
+void delete_end(int arr[], int &n);
+void delete_begin(int arr[], int &n);
+void delete_position(int arr[], int &n);
+void display(int arr[], int n);
+
+int main()
+{
+    int a[100], size, choice;
+    int n;
+    
+    cout<<"Enter size of the array: ";
+    cin>>size;
+    
+    cout<<"Enter the number of elements to be inserted: ";
+    cin>>n;
+    
+    for(int i=0; i<n; i++)
+        cin>>a[i];
+    
+    cout<<"Initial Array: ";
+    for(int i=0; i<n; i++)
+        cout<<a[i]<<" ";
+    cout<<endl;
+    
+    while(1)
+    {
+        cout<<"Menu:\n";
+        cout<<"1. Insert at End\n";
+        cout<<"2. Insert at Beginning\n";
+        cout<<"3. Insert at Specific Position\n";
+        cout<<"4. Delete from End\n";
+        cout<<"5. Delete from Beginning\n";
+        cout<<"6. Delete from Specific Position\n";
+        cout<<"7. Display Array\n";
+        cout<<"Enter your choice: ";
+        cin>>choice;
+        
+        switch(choice)
+        {
+            case 1: insert_end(a, size, n); break;
+            case 2: insert_begin(a, size, n); break;
+            case 3: insert_position(a, size, n); break;
+            case 4: delete_end(a, n); break;
+            case 5: delete_begin(a, n); break;
+            case 6: delete_position(a, n); break;
+            case 7: display(a, n); break;
+            default: 
+                cout<<"Wrong choice, Program terminated\n";
+                exit(0);
+        }
+    }
+    return 0;
+}
+
+void insert_end(int arr[], int &size, int &n)
+{
+    int ele;
+    cout<<"Enter element to insert at end: ";
+    cin>>ele;
+    
+    if(n == size)
+        cout<<"Array overflow\n";
+    else
+    {
+        arr[n++] = ele;
+        display(arr, n);
+    }
+}
+
+void insert_begin(int arr[], int &size, int &n)
+{
+    display(arr, n);
+    int ele;
+    cout<<"Enter element to insert at beginning: ";
+    cin>>ele;
+    
+    if(n == size)
+        cout<<"Array overflow\n";
+    else
+    {
+        for(int i=n-1; i>=0; i--)
+            arr[i+1] = arr[i];
+        arr[0] = ele;
+        n++;
+    }
+    display(arr, n);
+}
+
+void insert_position(int arr[], int &size, int &n)
+{
+    int pos, ele;
+    cout<<"Enter position to insert (0-based index): ";
+    cin>>pos;
+    cout<<"Enter element to insert at position " << pos << ": ";
+    cin>>ele;
+    
+    if(n == size)
+        cout<<"Array overflow\n";
+    else if(pos < 0 || pos > n)
+        cout<<"Invalid position\n";
+    else
+    {
+        for(int i=n-1; i>=pos; i--)
+            arr[i+1] = arr[i];
+        arr[pos] = ele;
+        n++;
+    }
+    display(arr, n);
+}
+
+void delete_end(int arr[], int &n)
+{
+    if(n == 0)
+        cout<<"Array underflow\n";
+    else
+    {
+        n--;
+        display(arr, n);
+    }
+}
+
+void delete_begin(int arr[], int &n)
+{
+    if(n == 0)
+        cout<<"Array underflow\n";
+    else
+    {
+        for(int i=0; i<n-1; i++)
+            arr[i] = arr[i+1];
+        n--;
+        display(arr, n);
+    }
+}
+
+void delete_position(int arr[], int &n)
+{
+    int pos;
+    cout<<"Enter position to delete (0-based index): ";
+    cin>>pos;
+    
+    if(n == 0)
+        cout<<"Array underflow\n";
+    else if(pos < 0 || pos >= n)
+        cout<<"Invalid position\n";
+    else
+    {
+        for(int i=pos; i<n-1; i++)
+            arr[i] = arr[i+1];
+        n--;
+        display(arr, n);
+    }
+}
+
+void display(int arr[], int n)
+{
+    cout<<"Elements: ";
+    for(int i=0; i<n; i++)
+        cout<<arr[i]<<" ";
+    cout<<endl;
+}
