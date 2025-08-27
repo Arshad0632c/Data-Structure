@@ -1,0 +1,79 @@
+Stack Linked List :
+
+#include<iostream>
+#include <cstdlib>
+using namespace std;
+
+struct Stack {
+    int data;
+    Stack *next;
+} *top = NULL;
+
+void push(int element);
+void pop();
+void display();
+
+int main() {
+    int choice, element;
+    cout << "1. Push\n2. Pop\n3. Display" << endl;
+
+    while (true) {
+        cout << "\nEnter the choice: ";
+        cin >> choice;
+
+        switch (choice) {
+            case 1:
+                cout << "Enter the element: ";
+                cin >> element;
+                push(element);
+                break;
+            case 2:
+                pop();
+                break;
+            case 3:
+                display();
+                break;
+            default:
+                cout << "Program Terminated!!!" << endl;
+                exit(0);
+        }
+    }
+    return 0;
+}
+
+void push(int element) {
+    Stack *newnode = new Stack;
+    newnode->data = element;
+    newnode->next = NULL;
+
+    if (top == NULL)
+        top = newnode;
+    else {
+        newnode->next = top;
+        top = newnode;
+    }
+}
+
+void pop() {
+    if (top == NULL) {
+        cout << "Stack Empty!!" << endl;
+    } else {
+        Stack *delnode = top;
+        cout << "Popped element = " << top->data << endl;
+        top = top->next;
+        delnode->next = NULL;
+        delete delnode;
+    }
+}
+
+void display() {
+    if (top == NULL) {
+        cout << "There is no element in the stack" << endl;
+    } else {
+        Stack *temp;
+        for (temp = top; temp != NULL; temp = temp->next)
+            cout << temp->data << "->";
+        cout << "NULL" << endl;
+    }
+}
+
