@@ -1,0 +1,165 @@
+Polynomial Addition:
+
+#include<iostream>
+using namespace std;
+
+void get_poly1();
+void get_poly2();
+void sum_poly();
+void display();
+
+struct poly {
+    int power, coeff;
+    poly* next=NULL;
+} *poly2=NULL, *poly3=NULL;
+
+poly* poly1=NULL, *tail1=NULL, *tail2=NULL, *tail3=NULL;
+
+int main() {
+    int choice;
+    cout << "1.Poly1   2.Poly2   3.Sum   4.Display";
+    while (1) {
+        cout << "\nChoice: ";
+        cin >> choice;
+        switch (choice) {
+            case 1: get_poly1(); break;
+            case 2: get_poly2(); break;
+            case 3: sum_poly();
+                    cout << "Addition operation is successful!!\n";
+                    break;
+            case 4: display(); break;
+            default: exit(0);
+        }
+    }
+    return 0;
+}
+
+void get_poly1() {
+    poly* newnode = new poly();
+    cout << "Enter the Coefficient: ";
+    cin >> newnode->coeff;
+    cout << "Enter the Power: ";
+    cin >> newnode->power;
+   // newnode->next = NULL;
+    if (poly1 == NULL)
+        poly1 = tail1 = newnode;
+    else {
+        tail1->next = newnode;
+        tail1 = newnode;
+       /* // insertion at end
+        poly* temp = poly1;
+        while (temp->next != NULL)
+            temp = temp->next;
+        temp->next = newnode;*/
+    }
+}
+
+void get_poly2() {
+    poly* newnode = new poly();
+    cout << "Enter the Coefficient: ";
+    cin >> newnode->coeff;
+    cout << "Enter the Power: ";
+    cin >> newnode->power;
+    newnode->next = NULL;
+    if (poly2 == NULL)
+        poly2 = tail2 = newnode;
+    else {
+        // insertion at end
+        tail2->next = newnode;
+        tail2 = newnode;
+    }
+}
+
+void sum_poly() {
+    poly *p1 = poly1, *p2 = poly2;
+    while ((p1 != NULL) && (p2 != NULL)) {
+        poly* newnode = new poly();
+        newnode->next = NULL;
+        if (p1->power > p2->power) {
+            newnode->coeff = p1->coeff;
+            newnode->power = p1->power;
+            p1 = p1->next;
+        } else if (p2->power > p1->power) {
+            newnode->coeff = p2->coeff;
+            newnode->power = p2->power;
+            p2 = p2->next;
+        } else {
+            newnode->coeff = p1->coeff + p2->coeff;
+            newnode->power = p1->power;
+            p1 = p1->next;
+            p2 = p2->next;
+        }
+        if (poly3 == NULL)
+            poly3 = tail3 = newnode;
+        else {
+            tail3->next = newnode;
+        	tail3 = newnode;
+        }
+    }//while
+    while (p1 != NULL) {
+        poly* newnode = new poly;
+        newnode->next = NULL;
+        newnode->coeff = p1->coeff;
+        newnode->power = p1->power;
+        p1 = p1->next;
+        if (poly3 == NULL)
+            poly3 = tail3 = newnode;
+        else {
+            tail3->next = newnode;
+        	tail3 = newnode;
+        }
+    }
+    while (p2 != NULL) {
+        poly* newnode = new poly();
+        newnode->next = NULL;
+        newnode->coeff = p2->coeff;
+        newnode->power = p2->power;
+        p2 = p2->next;
+        if (poly3 == NULL)
+            poly3 = tail3 = newnode;
+        else {
+            tail3->next = newnode;
+        	tail3 = newnode;
+        }
+    }
+}
+
+void display() {
+    cout << "\nList 1:";
+    poly* temp1 = poly1, *temp2 = poly2, *temp3 = poly3;
+    if (poly1 == NULL)
+        cout << "\nList Empty";
+    else {
+        while (temp1 != NULL) {
+            cout << temp1->coeff << " x^" << temp1->power;
+            if (temp1->next)
+                cout << " + ";
+            temp1 = temp1->next;
+        }
+    }
+    
+    cout << "\nList 2:";
+    if (poly2 == NULL)
+        cout << "\nList Empty";
+    else {
+        while (temp2 != NULL) {
+            cout << temp2->coeff << " x^" << temp2->power;
+            if (temp2->next)
+                cout << " + ";
+            temp2 = temp2->next;
+        }
+    }
+  
+    cout << "\nResultant List:";
+    if (poly3 == NULL)
+        cout << "\nList Empty";
+    else {
+        while (temp3 != NULL) {
+            cout << temp3->coeff << " x^" << temp3->power;
+            if (temp3->next)
+                cout << " + ";
+            temp3 = temp3->next;
+        }
+    }
+}
+
