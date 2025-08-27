@@ -1,0 +1,86 @@
+Queue Linked List:
+
+#include <iostream>
+#include <cstdlib>
+using namespace std;
+
+struct Queue {
+    int data;
+    Queue *next;
+} *front = NULL, *rear = NULL;
+
+void enqueue(int element);
+void dequeue();
+void display();
+
+int main() {
+    int choice, element;
+    cout << "1. Enqueue\n2. Dequeue\n3. Display" << endl;
+    while (true) {
+        cout << "\nEnter the choice: ";
+        cin >> choice;
+        switch (choice) {
+            case 1:
+                cout << "Enter the element: ";
+                cin >> element;
+                enqueue(element);
+                break;
+            case 2:
+                dequeue();
+                break;
+            case 3:
+                display();
+                break;
+            default:
+                cout << "Program Terminated!!!" << endl;
+                exit(0);
+        }
+    }
+    return 0;
+}
+
+void enqueue(int element) { // Insert at End
+    Queue *newnode = new Queue;
+    newnode->data = element;
+    newnode->next = NULL;
+
+    if (rear == NULL) {
+        rear = newnode;
+        front = newnode;
+    } else {
+        rear->next = newnode;
+        rear = newnode;
+    }
+}
+
+void dequeue() { // Deletion at Front
+    if (front == NULL) {
+        cout << "Queue Empty!!" << endl;
+    } else {
+        Queue *delnode = front;
+        cout << "Dequeued element = " << front->data << endl;
+
+        if (front == rear) {
+            front = rear = NULL;
+        } else {
+            front = front->next;
+            delnode->next = NULL;
+        }
+        delete delnode;
+    }
+}
+
+void display() {
+    if (front == NULL) {
+        cout << "There is no element in the queue" << endl;
+    } else {
+        Queue *temp = front;
+        cout << "The elements are: ";
+        while (temp != NULL) {
+            cout << temp->data << "->";
+            temp = temp->next;
+        }
+        cout << "NULL" << endl;
+    }
+}
+
